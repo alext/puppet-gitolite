@@ -294,7 +294,7 @@ describe 'gitolite', :type => 'class' do
       it 'should fail' do
         expect do
           should contain_class('gitolite')
-        end.to raise_error(Puppet::Error, /"foo\/bar" is not an absolute path/)
+        end.to raise_error(Puppet::Error, /parameter 'home_dir' expects a match for/)
       end
     end
 
@@ -304,7 +304,7 @@ describe 'gitolite', :type => 'class' do
       it 'should fail' do
         expect do
           should contain_class('gitolite')
-        end.to raise_error(Puppet::Error, /"0999" does not match/)
+        end.to raise_error(Puppet::Error, /parameter 'umask' expects a match for/)
       end
     end
 
@@ -395,7 +395,7 @@ describe 'gitolite', :type => 'class' do
 
     context "should validate local_code_in_repo is a bool" do
       let(:params) { { :local_code_in_repo => 10 } }
-      it { should compile.and_raise_error(/is not a boolean/) }
+      it { should compile.and_raise_error(/expects a Boolean value/) }
     end
 
     validations = {
@@ -403,31 +403,37 @@ describe 'gitolite', :type => 'class' do
         :name    => %w(home_dir),
         :valid   => %w(/absolute/filepath /absolute/directory/),
         :invalid => ['invalid', 3, 2.42, %w(array), { 'ha' => 'sh' }],
-        :message => 'is not an absolute path',
+        :message => 'expects a match for',
       },
-      'bool_stringified' => {
+      'boolean' => {
         :name    => %w(
           manage_home_dir manage_user allow_local_code
           repo_specific_hooks
         ),
-        :valid   => [true, 'true', false, 'false'],
-        :invalid => ['invalid', 3, 2.42, %w(array), { 'ha' => 'sh' }, nil],
-        :message => '(is not a boolean|Unknown type of boolean)',
+        :valid   => [true, false],
+        :invalid => ['invalid', 3, 2.42, %w(array), { 'ha' => 'sh' }, nil, 'true'],
+        :message => 'expects a Boolean value',
       },
       'string' => {
         :name    => %w(
-          admin_key_content git_config_keys group_name
-          local_code_path package_ensure package_name user_name
+          git_config_keys group_name local_code_path package_ensure
+          package_name user_name
         ),
         :valid   => ['present'],
         :invalid => [%w(array), { 'ha' => 'sh' }],
-        :message => 'is not a string',
+        :message => 'expects a String value',
+      },
+      'string_or_undef' => {
+        :name    => %w(admin_key_content),
+        :valid   => ['string', nil],
+        :invalid => [%w(array), { 'ha' => 'sh' }],
+        :message => 'expects a value of type Undef or String',
       },
       'string_file_source' => {
         :name    => %w(admin_key_source),
         :valid   => %w(puppet:///modules/subject/test),
         :invalid => [%w(array), { 'ha' => 'sh' }],
-        :message => 'is not a string',
+        :message => 'expects a value of type Undef or String',
       },
     }
 
@@ -443,11 +449,7 @@ describe 'gitolite', :type => 'class' do
         var[:invalid].each do |invalid|
           context "with #{var_name} (#{type}) set to invalid #{invalid} (as #{invalid.class})" do
             let(:params) { validation_params.merge({ :"#{var_name}" => invalid, }) }
-            it 'should fail' do
-              expect do
-                should contain_class(subject)
-              end.to raise_error(Puppet::Error, /#{var[:message]}/)
-            end
+            it { should compile.and_raise_error(/#{var[:message]}/) }
           end
         end
       end # var[:name].each
