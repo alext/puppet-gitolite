@@ -19,7 +19,7 @@ class gitolite::params {
     'Debian': {
       case $::lsbdistcodename {
         'jessie', 'stretch', 'trusty', 'xenial', 'bionic': {
-          $version = '3'
+
         }
         default: {
           fail("gitolite supports Debian 8 (jessie) and 9 (stretch) \
@@ -31,7 +31,6 @@ Detected lsbdistcodename is <${::lsbdistcodename}>.")
     'RedHat': {
       case $::operatingsystemmajrelease {
         '6', '7': {
-          $version = '3'
         }
         default: {
           fail("gitolite supports EL 6 and 7. Detected operatingsystemmajrelease is <${::operatingsystemmajrelease}>.")
@@ -44,7 +43,6 @@ Detected lsbdistcodename is <${::lsbdistcodename}>.")
       $home_dir     = '/srv/git'
       $package_name = 'gitolite'
       $user_name    = 'git'
-      $version      = '3'
     }
     default: {
       fail("gitolite supports osfamilies Debian, RedHat and Suse. Detected osfamily is <${::osfamily}>.")
@@ -52,13 +50,8 @@ Detected lsbdistcodename is <${::lsbdistcodename}>.")
   }
 
   if $::osfamily != 'Suse' {
-    if $version == '2' {
-      $cmd_install  = 'gl-setup -q'
-      $package_name = 'gitolite'
-    } else { # $version == '3'
-      $cmd_install  = 'gitolite setup -pk'
-      $package_name = 'gitolite3'
-    }
+    $cmd_install  = 'gitolite setup -pk'
+    $package_name = 'gitolite3'
     $group_name = $package_name
     $home_dir   = "/var/lib/${package_name}"
     $user_name  = $package_name

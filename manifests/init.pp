@@ -16,7 +16,6 @@ class gitolite (
   $repo_specific_hooks = $gitolite::params::repo_specific_hooks,
   $umask               = $gitolite::params::umask,
   $user_name           = $gitolite::params::user_name,
-  $version             = $gitolite::params::version,
 ) inherits gitolite::params {
   # <stringified variable handling>
   if is_string($manage_home_dir) == true {
@@ -74,7 +73,6 @@ class gitolite (
   validate_bool($repo_specific_hooks_bool)
   validate_re($umask, '^0[0-7][0-7][0-7]$')
   validate_string($user_name)
-  validate_re($version, ['2', '3'])
 
   if $local_code_in_repo_bool and ! $allow_local_code_bool {
     fail 'Parameter `allow_local_code` must be true to enable `local_code_in_repo`'
