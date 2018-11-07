@@ -10,7 +10,6 @@ group :development, :unit_tests do
   #gem 'puppet-lint-empty_string-check',                   :require => false
   gem 'puppet-lint-file_ensure-check',                    :require => false
   gem 'puppet-lint-file_source_rights-check',             :require => false
-  gem 'puppet-lint-fileserver-check',                     :require => false
   gem 'puppet-lint-leading_zero-check',                   :require => false
   gem 'puppet-lint-spaceship_operator_without_tag-check', :require => false
   gem 'puppet-lint-trailing_comma-check',                 :require => false

@@ -12,7 +12,7 @@ class gitolite::config inherits gitolite {
     owner   => $gitolite::user_name,
     group   => $gitolite::group_name,
     mode    => '0400',
-  }->
+  }
   exec { 'gitolite_install_admin_key':
     command     => "${gitolite::params::cmd_install} admin.pub",
     path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
@@ -20,6 +20,7 @@ class gitolite::config inherits gitolite {
     cwd         => $gitolite::home_dir,
     environment => "HOME=${gitolite::home_dir}",
     creates     => "${gitolite::home_dir}/projects.list",
+    require     => File['gitolite_admin_key'],
     before      => File['gitolite_config'],
   }
 

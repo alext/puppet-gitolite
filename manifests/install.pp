@@ -8,7 +8,7 @@ class gitolite::install inherits gitolite {
     group { $gitolite::group_name:
       ensure => 'present',
       system => true,
-    }->
+    }
     user { $gitolite::user_name:
       ensure           => 'present',
       gid              => $gitolite::group_name,
