@@ -4,21 +4,11 @@ language: ruby
 bundler_args: --without system_tests
 
 rvm:
-  - 2.0.0
-  - 2.1.0
+  - "2.3"
+  - "2.5"
 
 env:
   matrix:
-    - PUPPET_GEM_VERSION="~> 4.0.0"
-    - PUPPET_GEM_VERSION="~> 4.1.0"
-    - PUPPET_GEM_VERSION="~> 4.2.0"
-    - PUPPET_GEM_VERSION="~> 4.3.0"
-    - PUPPET_GEM_VERSION="~> 4.4.0"
-    - PUPPET_GEM_VERSION="~> 4.5.0"
-    - PUPPET_GEM_VERSION="~> 4.6.0"
-    - PUPPET_GEM_VERSION="~> 4.7.0"
-    - PUPPET_GEM_VERSION="~> 4.8.0"
-    - PUPPET_GEM_VERSION="~> 4.9.0"
     - PUPPET_GEM_VERSION="~> 4"
     - PUPPET_GEM_VERSION="~> 4" STRICT_VARIABLES="yes"
 
@@ -28,13 +18,6 @@ script: 'bundle exec metadata-json-lint metadata.json && bundle exec rake valida
 
 matrix:
   fast_finish: true
-  exclude:
-    - rvm: 2.0.0
-      env: PUPPET_GEM_VERSION="~> 4.9.0"
-    - rvm: 2.0.0
-      env: PUPPET_GEM_VERSION="~> 4"
-    - rvm: 2.0.0
-      env: PUPPET_GEM_VERSION="~> 4" STRICT_VARIABLES="yes"
 
 notifications:
   email: false
