@@ -1,30 +1,6 @@
 require 'spec_helper'
 describe 'gitolite', :type => 'class' do
   platforms = {
-    'debian6' =>
-      { :osfamily          => 'Debian',
-        :release           => '6.0',
-        :majrelease        => '6',
-        :lsbdistcodename   => 'squeeze',
-        :packages          => 'gitolite',
-        :package_name     => 'gitolite',
-        :gitolite_version  => '2',
-        :cmd_install       => 'gl-setup -q',
-        :group_name        => 'gitolite',
-        :user_name         => 'gitolite',
-      },
-    'debian7' =>
-      { :osfamily          => 'Debian',
-        :release           => '7.0',
-        :majrelease        => '7',
-        :lsbdistcodename   => 'wheezy',
-        :packages          => 'gitolite',
-        :package_name     => 'gitolite',
-        :gitolite_version  => '2',
-        :cmd_install       => 'gl-setup -q',
-        :group_name        => 'gitolite',
-        :user_name         => 'gitolite',
-      },
     'debian8' =>
       { :osfamily          => 'Debian',
         :release           => '8.0',
@@ -49,18 +25,6 @@ describe 'gitolite', :type => 'class' do
         :group_name        => 'gitolite3',
         :user_name         => 'gitolite3',
       },
-    'el5' =>
-      { :osfamily          => 'RedHat',
-        :release           => '5.0',
-        :majrelease        => '5',
-        :lsbdistcodename   => nil,
-        :packages          => 'gitolite',
-        :package_name     => 'gitolite',
-        :gitolite_version  => '2',
-        :cmd_install       => 'gl-setup -q',
-        :group_name        => 'gitolite',
-        :user_name         => 'gitolite',
-      },
     'el6' =>
       { :osfamily          => 'RedHat',
         :release           => '6.0',
@@ -84,30 +48,6 @@ describe 'gitolite', :type => 'class' do
         :cmd_install       => 'gitolite setup -pk',
         :group_name        => 'gitolite3',
         :user_name         => 'gitolite3',
-      },
-    'ubuntu1004' =>
-      { :osfamily          => 'Debian',
-        :release           => '10.04',
-        :majrelease        => '10',
-        :lsbdistcodename   => 'lucid',
-        :packages          => 'gitolite',
-        :package_name     => 'gitolite',
-        :gitolite_version  => '2',
-        :cmd_install       => 'gl-setup -q',
-        :group_name        => 'gitolite',
-        :user_name         => 'gitolite',
-      },
-    'ubuntu1204' =>
-      { :osfamily          => 'Debian',
-        :release           => '12.04',
-        :majrelease        => '12',
-        :lsbdistcodename   => 'precise',
-        :packages          => 'gitolite',
-        :package_name     => 'gitolite',
-        :gitolite_version  => '2',
-        :cmd_install       => 'gl-setup -q',
-        :group_name        => 'gitolite',
-        :user_name         => 'gitolite',
       },
     'ubuntu1404' =>
       { :osfamily          => 'Debian',
@@ -388,7 +328,7 @@ describe 'gitolite', :type => 'class' do
       it 'should fail' do
         expect do
           should contain_class('gitolite')
-        end.to raise_error(Puppet::Error, /gitolite supports EL 5, 6 and 7\. Detected operatingsystemmajrelease is <4>/)
+        end.to raise_error(Puppet::Error, /gitolite supports EL 6 and 7\. Detected operatingsystemmajrelease is <4>/)
       end
     end
 
@@ -403,7 +343,7 @@ describe 'gitolite', :type => 'class' do
       it 'should fail' do
         expect do
           should contain_class('gitolite')
-        end.to raise_error(Puppet::Error, /gitolite supports Debian 6 \(squeeze\), 7 \(wheezy\), 8 \(jessie\) and 9 \(stretch\) and Ubuntu 10\.04 \(lucid\), 12\.04 \(precise\), 14\.04 \(trusty\), 16\.04 \(xenial\) and 18\.04 \(bionic\). Detected lsbdistcodename is <etch>\./)
+        end.to raise_error(Puppet::Error, /gitolite supports Debian 8 \(jessie\) and 9 \(stretch\) and Ubuntu 14\.04 \(trusty\), 16\.04 \(xenial\) and 18\.04 \(bionic\). Detected lsbdistcodename is <etch>\./)
       end
     end
 
@@ -418,7 +358,7 @@ describe 'gitolite', :type => 'class' do
       it 'should fail' do
         expect do
           should contain_class('gitolite')
-        end.to raise_error(Puppet::Error, /gitolite supports Debian 6 \(squeeze\), 7 \(wheezy\), 8 \(jessie\) and 9 \(stretch\) and Ubuntu 10\.04 \(lucid\), 12\.04 \(precise\), 14\.04 \(trusty\), 16\.04 \(xenial\) and 18\.04 \(bionic\). Detected lsbdistcodename is <hardy>\./)
+        end.to raise_error(Puppet::Error, /gitolite supports Debian 8 \(jessie\) and 9 \(stretch\) and Ubuntu 14\.04 \(trusty\), 16\.04 \(xenial\) and 18\.04 \(bionic\). Detected lsbdistcodename is <hardy>\./)
       end
     end
 

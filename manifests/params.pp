@@ -18,29 +18,23 @@ class gitolite::params {
   case $::osfamily {
     'Debian': {
       case $::lsbdistcodename {
-        'squeeze', 'wheezy', 'lucid', 'precise': {
-          $version = '2'
-        }
         'jessie', 'stretch', 'trusty', 'xenial', 'bionic': {
           $version = '3'
         }
         default: {
-          fail("gitolite supports Debian 6 (squeeze), 7 (wheezy), 8 (jessie) and 9 (stretch) \
-and Ubuntu 10.04 (lucid), 12.04 (precise), 14.04 (trusty), 16.04 (xenial) and 18.04 (bionic). \
+          fail("gitolite supports Debian 8 (jessie) and 9 (stretch) \
+and Ubuntu 14.04 (trusty), 16.04 (xenial) and 18.04 (bionic). \
 Detected lsbdistcodename is <${::lsbdistcodename}>.")
         }
       }
     }
     'RedHat': {
       case $::operatingsystemmajrelease {
-        '5': {
-          $version = '2'
-        }
         '6', '7': {
           $version = '3'
         }
         default: {
-          fail("gitolite supports EL 5, 6 and 7. Detected operatingsystemmajrelease is <${::operatingsystemmajrelease}>.")
+          fail("gitolite supports EL 6 and 7. Detected operatingsystemmajrelease is <${::operatingsystemmajrelease}>.")
         }
       }
     }
