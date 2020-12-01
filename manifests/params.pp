@@ -18,12 +18,12 @@ class gitolite::params {
   case $::osfamily {
     'Debian': {
       case $::lsbdistcodename {
-        'jessie', 'stretch', 'trusty', 'xenial', 'bionic': {
+        'jessie', 'stretch', 'trusty', 'xenial', 'bionic', 'focal': {
 
         }
         default: {
           fail("gitolite supports Debian 8 (jessie) and 9 (stretch) \
-and Ubuntu 14.04 (trusty), 16.04 (xenial) and 18.04 (bionic). \
+and Ubuntu 14.04 (trusty), 16.04 (xenial), 18.04 (bionic) and 20.04 (focal). \
 Detected lsbdistcodename is <${::lsbdistcodename}>.")
         }
       }
